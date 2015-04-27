@@ -1,5 +1,5 @@
 //
-//  AppDelegate.h
+//  NSPViewController.h
 //  OC2.0 Effective
 //
 //  Created by zhangke on 15/4/27.
@@ -8,12 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@class ViewController;
+@interface NSPViewController : UIViewController
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
-
-@property (strong, nonatomic) UIWindow *window;
-
+-(void)goHome;
 
 @end
-

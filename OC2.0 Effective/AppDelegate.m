@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "ViewController.h"
+
 
 @interface AppDelegate ()
 
@@ -17,6 +19,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    NSString* s=Notification;
+    
+    ViewController* vc=[[ViewController alloc] initWithName:@"zz"];
+    //vc.name=@"ke";
+    [vc copy];
+    
     return YES;
 }
 
