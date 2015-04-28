@@ -90,10 +90,11 @@ typedef NS_OPTIONS(NSUInteger, DeviceFace){
 {
     self=[super init];
     if(self){
-        _name=[aName copy];
-        _age=[aAge copy];
+        _name=aName;
+        _age=aAge;
         
-        _valueArray=[NSArray arrayWithObjects:_name,_age, nil];
+//        NSLog(@"aName %p, _name %p, %lu, %lu",aName,_name,aName.retainCount ,_name.retainCount);
+        _valueArray=[NSArray arrayWithObjects:_name, _age, nil];
         
         if(_age.integerValue>25){
             //对象变化，而不是指针变化
@@ -110,14 +111,45 @@ typedef NS_OPTIONS(NSUInteger, DeviceFace){
 
 -(id)copyWithZone:(NSZone *)zone
 {
-    ViewController* vc= [[ViewController alloc] initWithName:_name age:_age];
-    //数组浅拷贝
-    vc->_valueArray=[_valueArray copy];
+    ViewController* vc= [ViewController alloc];
+    
+    //copy->   1.如果object是不可变的，那么就是浅拷贝，引用计数＋1
+    //2.如果object是mutable的，那么就是深拷贝，新对象引用计数＋1
+    //得到的对象是不可变的
+    //mutablecopy->  不管object是可变还是不可变，都是深拷贝，新对象引用计数＋1
+    //得到的对象是可变的
+    
+    vc->_name=[_name mutableCopy];
+    vc->_age=[_age mutableCopy];
+    
+
     //数组浅拷贝
     vc->_valueArray=[_valueArray mutableCopy];
-    [(NSMutableArray*)vc->_valueArray addObject:_name];
-    //数组深拷贝
-    vc->_valueArray=[NSArray arrayWithObjects:vc.name,vc.age, nil];
+    /*
+    (lldb) p [vc->_valueArray firstObject]
+    (id) $0 = 0x00000001054440c0
+    (lldb) p _name
+    (NSString *) $1 = 0x00000001054440c0 @"zhangke"
+    */
+    
+    //数组深拷贝,自定义,把原来数组里的元素深拷贝了加到数组里
+
+    [(NSMutableArray*)vc->_valueArray removeAllObjects];
+    [(NSMutableArray*)vc->_valueArray addObject:vc->_name];
+    [(NSMutableArray*)vc->_valueArray addObject:vc->_age];
+    
+    vc->_valueArray=[NSArray arrayWithObjects:vc->_name, vc->_age, nil];
+
+
+    //系统深拷贝
+    NSArray* trueDeepCopyArray = [NSKeyedUnarchiver unarchiveObjectWithData:
+                                    [NSKeyedArchiver archivedDataWithRootObject: _valueArray]];
+    /*
+    (lldb) p [trueDeepCopyArray firstObject]
+    (id) $6 = 0x00007fd110c0bc90
+    (lldb) p [_valueArray firstObject]
+    (id) $7 = 0x00000001070da0c0
+    */
     
     return vc;
 }

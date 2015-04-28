@@ -15,6 +15,7 @@
 		0A8EE2E11AEE7674000F0D76 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A8EE2DF1AEE7674000F0D76 /* LaunchScreen.xib */; };
 		0A8EE2ED1AEE7674000F0D76 /* OC2_0_EffectiveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8EE2EC1AEE7674000F0D76 /* OC2_0_EffectiveTests.m */; };
 		0A8EE3041AEE84B4000F0D76 /* NSPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8EE3031AEE84B4000F0D76 /* NSPViewController.m */; };
+		0A9FEC731AEF870B0009E8EE /* SubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A9FEC721AEF870B0009E8EE /* SubViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +44,8 @@
 		0A8EE2EC1AEE7674000F0D76 /* OC2_0_EffectiveTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OC2_0_EffectiveTests.m; sourceTree = "<group>"; };
 		0A8EE3021AEE84B4000F0D76 /* NSPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSPViewController.h; sourceTree = "<group>"; };
 		0A8EE3031AEE84B4000F0D76 /* NSPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSPViewController.m; sourceTree = "<group>"; };
+		0A9FEC711AEF870B0009E8EE /* SubViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubViewController.h; sourceTree = "<group>"; };
+		0A9FEC721AEF870B0009E8EE /* SubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +92,7 @@
 				0A8EE2D71AEE7674000F0D76 /* ViewController.h */,
 				0A8EE2D81AEE7674000F0D76 /* ViewController.m */,
 				0A8EE3011AEE84AA000F0D76 /* NameSpace */,
+				0A9FEC701AEF86F20009E8EE /* SubClass */,
 				0A8EE2DA1AEE7674000F0D76 /* Main.storyboard */,
 				0A8EE2DD1AEE7674000F0D76 /* Images.xcassets */,
 				0A8EE2DF1AEE7674000F0D76 /* LaunchScreen.xib */,
@@ -130,6 +134,15 @@
 				0A8EE3031AEE84B4000F0D76 /* NSPViewController.m */,
 			);
 			path = NameSpace;
+			sourceTree = "<group>";
+		};
+		0A9FEC701AEF86F20009E8EE /* SubClass */ = {
+			isa = PBXGroup;
+			children = (
+				0A9FEC711AEF870B0009E8EE /* SubViewController.h */,
+				0A9FEC721AEF870B0009E8EE /* SubViewController.m */,
+			);
+			path = SubClass;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,6 +245,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A9FEC731AEF870B0009E8EE /* SubViewController.m in Sources */,
 				0A8EE2D91AEE7674000F0D76 /* ViewController.m in Sources */,
 				0A8EE2D61AEE7674000F0D76 /* AppDelegate.m in Sources */,
 				0A8EE3041AEE84B4000F0D76 /* NSPViewController.m in Sources */,
@@ -359,6 +373,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				INFOPLIST_FILE = "OC2.0 Effective/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -369,6 +384,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				INFOPLIST_FILE = "OC2.0 Effective/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -428,6 +444,7 @@
 				0A8EE2F21AEE7674000F0D76 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0A8EE2F31AEE7674000F0D76 /* Build configuration list for PBXNativeTarget "OC2.0 EffectiveTests" */ = {
 			isa = XCConfigurationList;
@@ -436,6 +453,7 @@
 				0A8EE2F51AEE7674000F0D76 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

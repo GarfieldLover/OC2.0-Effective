@@ -22,9 +22,11 @@
     
     NSString* s=Notification;
     
-    ViewController* vc=[[ViewController alloc] initWithName:@"zz"];
+    ViewController* vc=[[ViewController alloc] initWithName:@"zhangke"];
     //vc.name=@"ke";
     [vc copy];
+    //public
+//    vc->_test=@"22";
     
     return YES;
 }

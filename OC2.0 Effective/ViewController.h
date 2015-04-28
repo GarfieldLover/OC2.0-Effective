@@ -11,7 +11,10 @@
 UIKIT_EXTERN NSString *const Notification;
 
 
-@interface ViewController : UIViewController<NSCopying>
+@interface ViewController : UIViewController<NSCopying>{
+@protected
+    NSString* _test;
+}
 
 @property (nonatomic,readonly,copy) NSString* name;
 
