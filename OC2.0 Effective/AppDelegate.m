@@ -24,9 +24,18 @@
     
     ViewController* vc=[[ViewController alloc] initWithName:@"zhangke"];
     //vc.name=@"ke";
-    [vc copy];
+    //[vc copy];
+    
     //public
-//    vc->_test=@"22";
+    //vc->_test=@"22";
+    
+    [vc memory];
+    [vc release];
+    
+    while (1) {
+        [vc aftermemory];
+        sleep(1);
+    }
     
     return YES;
 }

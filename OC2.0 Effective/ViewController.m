@@ -7,6 +7,8 @@
 //
 
 #import "ViewController.h"
+#import "NSPViewController.h"
+
 
 static const float pointY=0.43f;
 
@@ -27,7 +29,9 @@ typedef NS_OPTIONS(NSUInteger, DeviceFace){
 
 
 
-@interface ViewController ()
+@interface ViewController (){
+
+}
 
 @end
 
@@ -153,6 +157,113 @@ typedef NS_OPTIONS(NSUInteger, DeviceFace){
     
     return vc;
 }
+
+
+-(void)memory
+{
+//    NSDeallocateObject(self);
+//    NSAllocateObject([ViewController class], 0, nil);
+    
+    //引用计数表管理技术，纪录存有内存块地址和计数，能够追溯到内存，为0，择机把内存清空合并成大块内存
+    //autorelease,如果有在使用obj1，则不会释放。在retainCount为0，runloop会回收
+    //使用@autoreleasepool，在作用域外会被释放。
+    //NSAutoreleasePool，具体内部方法见下列
+    
+//    NSAutoreleasePool* pool=[[NSAutoreleasePool alloc] init];
+    while (0) {
+        @autoreleasepool {
+            //地址没有几个，释放了立马就能重用，内存控制的很低，其实应该也是调用了drain
+            //__autoreleasing,在arc中不显示的掉，在自动释放池内肯定加，在mrc无作用
+            UIImage* __autoreleasing image=[[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"照片" ofType:@"png"]];
+            NSLog(@"%p,%ld",image,image.retainCount);
+            [image autorelease];
+            sleep(5);
+            //autorelease不直接减retainCount，而只是加到了待释放数组中
+            NSLog(@"-----%p,%ld",image,image.retainCount);
+        }
+    }
+//    [pool drain];
+    
+    //arc下，超出作用区域自动释放，至为nil
+    id __strong obj1=[[NSObject alloc] init];  //A
+    
+    id __strong obj2=[[NSObject alloc] init];  //B
+
+    id __strong obj3=nil;
+    
+    obj1=obj2; //A被释放
+    obj2=obj3; //B被释放
+    
+    //转换
+    void* p=(__bridge void*)obj1;
+    obj1=(__bridge id)p;
+    
+    
+    //循环引用，引用环，谁也释放不了，形成内存孤岛
+    //如果都是strong，或者在arc下自动是strong，则引用计数为2，都得不到释放，在arc必须有一方为weak，mrc或者不增加计数
+    //__weak 只能在arc 计数不加1，为0，创建出即被释放，mrc不管用,用unsafe_unretained
+    NSPViewController* pv=[[NSPViewController alloc] init];
+    self.obj=pv;
+    pv.obj=self;
+    
+    //NSRunLoop能随时释放注册到@autoreleasepool中的对象
+    
+}
+
+
+
+-(void)dealloc
+{
+    //应该是copy出来的
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [super dealloc];
+}
+
+
+
+#if 0
+-(instancetype)autorelease
+{
+    [NSAutoreleasePool addObject:self];
+}
+
++(void)addObject:(id)anObject
+{
+    [array addObject:anObject];
+}
+
+-(void)drain
+{
+    [self dealloc];
+}
+
+-(void)dealloc
+{
+    [self emptyPool];
+    [self release];
+}
+
+-(void)emptyPool
+{
+    for(id obj in array){
+        [obj1 release];
+    }
+}
+
+-(void)release
+{
+    如果计数-- > 0,则不dealloc，
+    计数＝＝0，dealloc，调free
+}
+
+#endif
+
+
+-(void)aftermemory
+{
+    NSLog(@"self.obj retainCount %ld",[self.obj retainCount]);
+}
+
 
 
 

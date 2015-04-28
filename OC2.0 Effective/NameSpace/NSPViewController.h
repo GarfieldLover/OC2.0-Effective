@@ -10,6 +10,10 @@
 
 @interface NSPViewController : UIViewController
 
+@property (nonatomic,unsafe_unretained) id obj;
+
+-(void)setobj:(id)object;
+
 -(void)goHome;
 
 @end

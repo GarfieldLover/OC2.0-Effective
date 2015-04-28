@@ -16,6 +16,9 @@ UIKIT_EXTERN NSString *const Notification;
     NSString* _test;
 }
 
+@property (nonatomic,strong) id obj;
+
+
 @property (nonatomic,readonly,copy) NSString* name;
 
 @property (nonatomic,readonly,copy) NSString* age;
@@ -31,5 +34,11 @@ UIKIT_EXTERN NSString *const Notification;
 
 -(instancetype)initWithName:(NSString*)aName age:(NSString*)aAge;
 
+-(void)memory;
+
+-(void)aftermemory;
+
+
 @end
+
 
