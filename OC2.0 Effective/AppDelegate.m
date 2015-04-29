@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
-
+#import "BlockViewController.h"
 
 @interface AppDelegate ()
 
@@ -36,7 +36,9 @@
     [vc CoreFoundation];
     
     [vc aftermemory];
-
+    
+    BlockViewController* blockVC=[[BlockViewController alloc] init];
+    [blockVC viewDidLoad];
     
     return YES;
 }

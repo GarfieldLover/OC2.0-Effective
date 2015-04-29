@@ -216,7 +216,6 @@ typedef NS_OPTIONS(NSUInteger, DeviceFace){
 //    objc_release
 //    objc_destroyWeak
 //    arc destroyWeak(&obj4);  立即被释放
-    
 }
 
 

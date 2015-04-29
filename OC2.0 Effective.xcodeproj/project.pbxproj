@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A67695D1AF1158400EB8EC6 /* BlockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A67695C1AF1158400EB8EC6 /* BlockViewController.m */; };
+		0A6769601AF1243E00EB8EC6 /* BlockObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A67695F1AF1243E00EB8EC6 /* BlockObject.m */; };
 		0A8EE2D31AEE7674000F0D76 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8EE2D21AEE7674000F0D76 /* main.m */; };
 		0A8EE2D61AEE7674000F0D76 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8EE2D51AEE7674000F0D76 /* AppDelegate.m */; };
 		0A8EE2D91AEE7674000F0D76 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8EE2D81AEE7674000F0D76 /* ViewController.m */; };
@@ -30,6 +32,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A67695B1AF1158400EB8EC6 /* BlockViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockViewController.h; sourceTree = "<group>"; };
+		0A67695C1AF1158400EB8EC6 /* BlockViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockViewController.m; sourceTree = "<group>"; };
+		0A67695E1AF1243E00EB8EC6 /* BlockObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockObject.h; sourceTree = "<group>"; };
+		0A67695F1AF1243E00EB8EC6 /* BlockObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockObject.m; sourceTree = "<group>"; };
 		0A8EE2CD1AEE7674000F0D76 /* OC2.0 Effective.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OC2.0 Effective.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A8EE2D11AEE7674000F0D76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A8EE2D21AEE7674000F0D76 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -68,6 +74,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A67695A1AF1156A00EB8EC6 /* Block */ = {
+			isa = PBXGroup;
+			children = (
+				0A67695B1AF1158400EB8EC6 /* BlockViewController.h */,
+				0A67695C1AF1158400EB8EC6 /* BlockViewController.m */,
+				0A67695E1AF1243E00EB8EC6 /* BlockObject.h */,
+				0A67695F1AF1243E00EB8EC6 /* BlockObject.m */,
+			);
+			path = Block;
+			sourceTree = "<group>";
+		};
 		0A8EE2C41AEE7674000F0D76 = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +112,7 @@
 				0A8EE2D81AEE7674000F0D76 /* ViewController.m */,
 				0A8EE3011AEE84AA000F0D76 /* NameSpace */,
 				0A9FEC701AEF86F20009E8EE /* SubClass */,
+				0A67695A1AF1156A00EB8EC6 /* Block */,
 				0A8EE2DA1AEE7674000F0D76 /* Main.storyboard */,
 				0A8EE2DD1AEE7674000F0D76 /* Images.xcassets */,
 				0A8EE2DF1AEE7674000F0D76 /* LaunchScreen.xib */,
@@ -249,10 +267,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A67695D1AF1158400EB8EC6 /* BlockViewController.m in Sources */,
 				0A9FEC731AEF870B0009E8EE /* SubViewController.m in Sources */,
 				0A8EE2D91AEE7674000F0D76 /* ViewController.m in Sources */,
 				0A8EE2D61AEE7674000F0D76 /* AppDelegate.m in Sources */,
 				0A8EE3041AEE84B4000F0D76 /* NSPViewController.m in Sources */,
+				0A6769601AF1243E00EB8EC6 /* BlockObject.m in Sources */,
 				0A8EE2D31AEE7674000F0D76 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
