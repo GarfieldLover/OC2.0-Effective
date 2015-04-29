@@ -30,12 +30,13 @@
     //vc->_test=@"22";
     
     [vc memory];
-    [vc release];
+    //循环引用
+    //[vc release];
     
-    while (1) {
-        [vc aftermemory];
-        sleep(1);
-    }
+    [vc CoreFoundation];
+    
+    [vc aftermemory];
+
     
     return YES;
 }

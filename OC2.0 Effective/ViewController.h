@@ -38,6 +38,8 @@ UIKIT_EXTERN NSString *const Notification;
 
 -(void)aftermemory;
 
+-(void)CoreFoundation;
+
 
 @end
 

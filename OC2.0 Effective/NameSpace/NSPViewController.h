@@ -10,6 +10,7 @@
 
 @interface NSPViewController : UIViewController
 
+//mrc,unsafe_unretained   arc,weak
 @property (nonatomic,unsafe_unretained) id obj;
 
 -(void)setobj:(id)object;

@@ -185,6 +185,9 @@ typedef NS_OPTIONS(NSUInteger, DeviceFace){
 //    [pool drain];
     
     //arc下，超出作用区域自动释放，至为nil
+    //arc下创建的对象默认所有权修饰符为__strong,
+    //属性内  assign unsafe_unretained __unsafe_unretained ,  copy retain strong  __strong ,  weak  __weak
+    //strong , weak ,废弃时将变量设置为nil
     id __strong obj1=[[NSObject alloc] init];  //A
     
     id __strong obj2=[[NSObject alloc] init];  //B
@@ -208,8 +211,13 @@ typedef NS_OPTIONS(NSUInteger, DeviceFace){
     
     //NSRunLoop能随时释放注册到@autoreleasepool中的对象
     
+    id __weak obj4=obj1;
+//    objc_initWeak()
+//    objc_release
+//    objc_destroyWeak
+//    arc destroyWeak(&obj4);  立即被释放
+    
 }
-
 
 
 -(void)dealloc
@@ -254,6 +262,10 @@ typedef NS_OPTIONS(NSUInteger, DeviceFace){
 {
     如果计数-- > 0,则不dealloc，
     计数＝＝0，dealloc，调free
+    if(retainCount>1)
+        retainCount--;
+    else
+    {dealloc();}
 }
 
 #endif
@@ -261,11 +273,52 @@ typedef NS_OPTIONS(NSUInteger, DeviceFace){
 
 -(void)aftermemory
 {
-    NSLog(@"self.obj retainCount %ld",[self.obj retainCount]);
+    while (0) {
+        NSLog(@"self.obj retainCount %ld",[self.obj retainCount]);
+        sleep(3);
+    }
 }
 
 
+-(void)CoreFoundation
+{
+    //Core Foundation框架和Foundation框架紧密相关，它们为相同功能提供接口，但Foundation框架提供Objective-C接口。如果您将Foundation对象和Core Foundation类型掺杂使用，则可利用两个框架之间的 “toll-free bridging”。免费桥
+    //
+    
+    CFArrayRef cfObject=NULL;
+    
+    id obj=[[NSMutableArray alloc] init];
+    [obj addObject:[NSObject new]];
+    
+    //__bridge来做objectc对象和corefoundtion结构体转化
+//    cfObject=(__bridge CFArrayRef)obj;
+    cfObject=CFBridgingRetain(obj);
 
+    NSLog(@"CoreFoundation  %ld",CFGetRetainCount(cfObject));
+
+    CFShow(cfObject);
+
+    CFRelease(cfObject);
+    NSLog(@"CoreFoundation  %ld",CFGetRetainCount(cfObject));
+    [obj release];
+    
+    //根据网上查阅的资料，也许可以得出以下结论，事实上label的确已经被dealloc了，保留计数器的值也已经变成0了，其原来占用的内存也已经不可用 了，但是原来这块内存中的内容还没有变(标记删除)，将会在未来某个不确定的时间上被清理 ，这就是为什么NSLog输出的label保留计数器的值仍为1，而如果在此 之前再加上一个NSLog，则改变了原来这块内存的内容，于是发送给label的消息不再会被响应，于是程序crash。
+    //所以说，两种情况都是有可能发生的，至于到底发生哪种情况，完全取决于合适系统清理掉label占用的内存，也可以说取决于“运气”，因为这个时间是不确定的。由于苹果源码非开源,所以究竟是什么样的都知识猜测,以上内容皆网上结果,本人认为retaincount最后为1.永远不可能为0.具体论证如下:
+
+    /*
+    Student *stu=[Studentnew];//retainCount=1
+    
+    [stu retain];  //retainCount=2;
+    
+    [stu release];//执行如 release(){if(retainCount>1)retainCount--;else{dealloc();}}的操作   retainCount=1
+    
+    [stu release];//执行如 release()内部的else中的操作 调用dealloc()方法,外部实现了重写,故:调用dealloc();  此时retainCount=1 .
+    */
+    
+    NSLog(@"obj  %ld",[obj retainCount]);
+
+    
+}
 
 -(void)error:(NSError**)error
 {
