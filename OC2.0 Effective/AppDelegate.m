@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 #import "BlockViewController.h"
+#import "GCDObject.h"
+
 
 @interface AppDelegate ()
 
@@ -20,6 +22,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+#if 0
     NSString* s=Notification;
     
     ViewController* vc=[[ViewController alloc] initWithName:@"zhangke"];
@@ -40,6 +43,11 @@
     BlockViewController* blockVC=[[BlockViewController alloc] init];
     [blockVC viewDidLoad];
     [blockVC release];
+    
+#endif
+    
+    [[GCDObject alloc] init];
+    
     
     return YES;
 }
