@@ -23,7 +23,14 @@
 -(void)loadImageWithBlock:(imageBlock)block
 {
     [aBlock release];
-    aBlock=[block copy];
+    //对于block语法可以调用copy，除了block作为返回值，赋值给__strong修饰符的变量，含有usingblock或GCD外，
+    //推荐使用copy方法
+    //会复制到堆上___调用copy，block作为返回值，block赋值给strong的对象，usingBlock或GCD的block
+    //NSConcreteStackBlock，创建在栈上，从栈复制到堆
+    //NSConcreteGlobalBlock, 创建在全局数据区域上，什么也不做，指向地址相同,计数为1
+    //NSConcreteMallocBlock，创建在堆上，copy创建新对象当然是1，都是1
+    aBlock=[[[block copy] retain] retain];
+    
 }
 
 -(void)callBack

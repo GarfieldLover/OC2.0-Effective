@@ -39,6 +39,7 @@
     
     BlockViewController* blockVC=[[BlockViewController alloc] init];
     [blockVC viewDidLoad];
+    [blockVC release];
     
     return YES;
 }
