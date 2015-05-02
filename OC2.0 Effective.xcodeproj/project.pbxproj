@@ -19,6 +19,7 @@
 		0A8EE3041AEE84B4000F0D76 /* NSPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8EE3031AEE84B4000F0D76 /* NSPViewController.m */; };
 		0A9FEC731AEF870B0009E8EE /* SubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A9FEC721AEF870B0009E8EE /* SubViewController.m */; };
 		0AC06EA41AEFD9390063AAAB /* 照片.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AC06EA31AEFD9390063AAAB /* 照片.png */; };
+		0AD2DE2F1AF5318C000A52D3 /* DesignPatterns.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD2DE2E1AF5318C000A52D3 /* DesignPatterns.m */; };
 		0ADC6EA01AF27C94003BE33C /* GCDObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ADC6E9F1AF27C94003BE33C /* GCDObject.m */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +56,8 @@
 		0A9FEC711AEF870B0009E8EE /* SubViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubViewController.h; sourceTree = "<group>"; };
 		0A9FEC721AEF870B0009E8EE /* SubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubViewController.m; sourceTree = "<group>"; };
 		0AC06EA31AEFD9390063AAAB /* 照片.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "照片.png"; sourceTree = "<group>"; };
+		0AD2DE2D1AF5318C000A52D3 /* DesignPatterns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DesignPatterns.h; sourceTree = "<group>"; };
+		0AD2DE2E1AF5318C000A52D3 /* DesignPatterns.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DesignPatterns.m; sourceTree = "<group>"; };
 		0ADC6E9E1AF27C94003BE33C /* GCDObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDObject.h; sourceTree = "<group>"; };
 		0ADC6E9F1AF27C94003BE33C /* GCDObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDObject.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -117,6 +120,7 @@
 				0A9FEC701AEF86F20009E8EE /* SubClass */,
 				0A67695A1AF1156A00EB8EC6 /* Block */,
 				0ADC6E9D1AF27C7F003BE33C /* GCD */,
+				0AD2DE2C1AF530BD000A52D3 /* 设计模式 */,
 				0A8EE2DA1AEE7674000F0D76 /* Main.storyboard */,
 				0A8EE2DD1AEE7674000F0D76 /* Images.xcassets */,
 				0A8EE2DF1AEE7674000F0D76 /* LaunchScreen.xib */,
@@ -168,6 +172,15 @@
 				0A9FEC721AEF870B0009E8EE /* SubViewController.m */,
 			);
 			path = SubClass;
+			sourceTree = "<group>";
+		};
+		0AD2DE2C1AF530BD000A52D3 /* 设计模式 */ = {
+			isa = PBXGroup;
+			children = (
+				0AD2DE2D1AF5318C000A52D3 /* DesignPatterns.h */,
+				0AD2DE2E1AF5318C000A52D3 /* DesignPatterns.m */,
+			);
+			path = "设计模式";
 			sourceTree = "<group>";
 		};
 		0ADC6E9D1AF27C7F003BE33C /* GCD */ = {
@@ -285,6 +298,7 @@
 				0A8EE2D91AEE7674000F0D76 /* ViewController.m in Sources */,
 				0ADC6EA01AF27C94003BE33C /* GCDObject.m in Sources */,
 				0A8EE2D61AEE7674000F0D76 /* AppDelegate.m in Sources */,
+				0AD2DE2F1AF5318C000A52D3 /* DesignPatterns.m in Sources */,
 				0A8EE3041AEE84B4000F0D76 /* NSPViewController.m in Sources */,
 				0A6769601AF1243E00EB8EC6 /* BlockObject.m in Sources */,
 				0A8EE2D31AEE7674000F0D76 /* main.m in Sources */,
