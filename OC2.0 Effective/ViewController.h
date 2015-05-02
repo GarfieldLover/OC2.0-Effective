@@ -25,6 +25,7 @@ UIKIT_EXTERN NSString *const Notification;
 
 @property (nonatomic,readonly,copy) NSArray* valueArray;
 
+@property (nonatomic,strong) NSString* test;
 
 -(void)goHome;
 

@@ -86,6 +86,7 @@
         });
         
         //1.变更第一个参数的执行优先级为第二个参数的。2.如果第二个参数是serial，则第一个参数的queue们顺序执行，相当于依赖？
+        //派发队列层级结构，serialQueue会在globalQueue里执行，第一个参数会在第二个参数里执行
         dispatch_set_target_queue(serialQueue, globalQueue);
         
         //想在指定时间后执行处理，使用

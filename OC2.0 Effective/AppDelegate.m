@@ -22,7 +22,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-#if 0
     NSString* s=Notification;
     
     ViewController* vc=[[ViewController alloc] initWithName:@"zhangke"];
@@ -39,16 +38,17 @@
     [vc CoreFoundation];
     
     [vc aftermemory];
-    
+#if 0
+
     BlockViewController* blockVC=[[BlockViewController alloc] init];
     [blockVC viewDidLoad];
     [blockVC release];
     
-#endif
     
     [[GCDObject alloc] init];
     
-    
+#endif
+ 
     return YES;
 }
 
@@ -71,7 +71,8 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    //应用关闭时，需要close和释放资源
+    
 }
 
 @end

@@ -29,6 +29,7 @@ typedef NS_OPTIONS(NSUInteger, DeviceFace){
 
 
 
+//continuation分类，定义在.m里，分类没有名字，runtime会检测
 @interface ViewController (){
 
 }
@@ -78,6 +79,35 @@ typedef NS_OPTIONS(NSUInteger, DeviceFace){
     
     DeviceFace face=DOWN | UP | RIGHT;
     
+    //多个线程执行同一份代码，读写，使用锁实现同步，同步block
+    NSLock* lock=[[NSLock alloc] init];
+    [lock lock];
+    id object=[[NSObject alloc] init];
+    [lock unlock];
+    
+    @synchronized(self){
+        object=[NSObject new];
+    };
+    
+    //使用serial队列读取写入，并发队列也可以执行，使用栅栏barrier，
+    
+    //无序集合，多用enumerator，枚举器
+    NSSet* set=[[NSSet alloc] initWithObjects:lock, name,nil];
+    [set enumerateObjectsUsingBlock:^(id obj, BOOL* stop){
+        NSLog(@"%@",obj);
+    }];
+    
+    //VC内部啥也不干3个计数，self，superclass？
+    //会引用self，找判断条件把timer失效，释放self
+    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(runLoop:) userInfo:nil repeats:YES];
+    
+}
+
+-(void)runLoop:(NSTimer*)timer
+{
+    if(1){
+        [timer invalidate];
+    }
 }
 
 -(instancetype)init
@@ -100,28 +130,69 @@ typedef NS_OPTIONS(NSUInteger, DeviceFace){
 //        NSLog(@"aName %p, _name %p, %lu, %lu",aName,_name,aName.retainCount ,_name.retainCount);
         _valueArray=[NSArray arrayWithObjects:_name, _age, nil];
         
+        //加入数组肯定让引用计数加1，但是应该会有数组的标记，不会减到0就释放，除非remove了
+        NSString* str=[[NSString alloc] initWithString:@"XXX"];
+        NSMutableArray* aaaa=[NSMutableArray array];
+        [aaaa addObject:str];
+        [str release];
+        
+        //应该是2,alloc ,retain
+        self.test=[[NSString alloc] init];
+        //1，只有alloc
+        _test=[[NSString alloc] init];
+        
         if(_age.integerValue>25){
             //对象变化，而不是指针变化
             NSError* error=nil;
             [self error:&error];
             
+            //*** Terminating app due to uncaught exception 'age', reason: '>20'，抛出异常，并崩溃
             @throw [NSException exceptionWithName:@"age" reason:@">20" userInfo:nil];
             
         }
-        
+        NSLog(@"_____ %@",str);
     }
     return self;
+}
+
+//readwrite：是可读可写特性，需要生成getter和setter方法；
+//readonly是之都特性，只会生成getter方法，不会生成setter方法，不希望属性在类外改变时候使用；
+//alloc 对象分配后引用计数为1retain 对象的引用计数+1
+//
+//copy 一个对象变成新的对象(新内存地址) 引用计数为1 原来对象计数不变
+//
+//assign：是赋值特性，setter方法将传入参数赋值给实例变量（一把钥匙，同进同出）；用于基础数据类型；
+//weak：由ARC引入的对象变量的属性，比assign多了一个功能，对象消失后把指针置为nil，避免了野指针（不是null指针，是指向“垃圾”内存（不可用的内存）的指针）；
+//retain：表示持有特性，setter方法将传入参数先保留，后赋值（两把钥匙，各自进出），传入参数的retaincount加1；
+//strong：ARC引入，等同于retain，对象消失后把指针置为ni；
+//copy：表示赋值特性，setter方法将传入对象复制一份；需要完全一个新的对象时候（两套房子，两把钥匙）；
+//nonatomic：非原子操作，决定编译器生成setter和getter方法是否原子操作，不加同步，多线程访问提高性能，
+//__unsafe_unretain：对象引用不会加1，对象释放后，不会置为nil，可能造成野指针，尽量少用。
+//autorelease：对象引用计数不立即－1，在pool drain时－1， 如果为0不马上释放，最近一个个pool时释放
+
+//ARC所做的只不过是在代码编译时为你自动在合适的位置插入release或autorelease，就如同之前MRC时你所做的那样
+-(void)setTest:(NSString *)aTest
+{
+    if(_test!=aTest){
+        [_test release];
+        //传入值的retain，传入值的计数应该是2
+        _test=[aTest retain];
+    }
 }
 
 -(id)copyWithZone:(NSZone *)zone
 {
     ViewController* vc= [ViewController alloc];
     
+    //如果是系统的
     //copy->   1.如果object是不可变的，那么就是浅拷贝，引用计数＋1
     //2.如果object是mutable的，那么就是深拷贝，新对象引用计数＋1
     //得到的对象是不可变的
     //mutablecopy->  不管object是可变还是不可变，都是深拷贝，新对象引用计数＋1
     //得到的对象是可变的
+    
+    //如果是自己创建继承于nsobject的，在这会创建新的对象返回，所以肯定是新对象
+    
     
     vc->_name=[_name mutableCopy];
     vc->_age=[_age mutableCopy];
@@ -170,6 +241,7 @@ typedef NS_OPTIONS(NSUInteger, DeviceFace){
     //NSAutoreleasePool，具体内部方法见下列
     
 //    NSAutoreleasePool* pool=[[NSAutoreleasePool alloc] init];
+    //使用@autoreleasepool降低内存峰值
     while (0) {
         @autoreleasepool {
             //地址没有几个，释放了立马就能重用，内存控制的很低，其实应该也是调用了drain
@@ -205,9 +277,11 @@ typedef NS_OPTIONS(NSUInteger, DeviceFace){
     //循环引用，引用环，谁也释放不了，形成内存孤岛
     //如果都是strong，或者在arc下自动是strong，则引用计数为2，都得不到释放，在arc必须有一方为weak，mrc或者不增加计数
     //__weak 只能在arc 计数不加1，为0，创建出即被释放，mrc不管用,用unsafe_unretained
+    //循环引用最后一个对象需要是weak，这样第一个release计数为0，后续都能得到释放。
     NSPViewController* pv=[[NSPViewController alloc] init];
     self.obj=pv;
     pv.obj=self;
+    
     
     //NSRunLoop能随时释放注册到@autoreleasepool中的对象
     
@@ -222,6 +296,8 @@ typedef NS_OPTIONS(NSUInteger, DeviceFace){
 -(void)dealloc
 {
     //应该是copy出来的
+    //解除监听Observer，清除套接字socket，大块内存，文件内存等
+    //清除KVO
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];
 }
@@ -303,6 +379,9 @@ typedef NS_OPTIONS(NSUInteger, DeviceFace){
     
     //根据网上查阅的资料，也许可以得出以下结论，事实上label的确已经被dealloc了，保留计数器的值也已经变成0了，其原来占用的内存也已经不可用 了，但是原来这块内存中的内容还没有变(标记删除)，将会在未来某个不确定的时间上被清理 ，这就是为什么NSLog输出的label保留计数器的值仍为1，而如果在此 之前再加上一个NSLog，则改变了原来这块内存的内容，于是发送给label的消息不再会被响应，于是程序crash。
     //所以说，两种情况都是有可能发生的，至于到底发生哪种情况，完全取决于合适系统清理掉label占用的内存，也可以说取决于“运气”，因为这个时间是不确定的。由于苹果源码非开源,所以究竟是什么样的都知识猜测,以上内容皆网上结果,本人认为retaincount最后为1.永远不可能为0.具体论证如下:
+    //retaincount可能永远不返回0，系统会优化对象的释放，在计数是1时就回收了
+    //如果是大的，13443243284098，是字面量语法，单例对象
+    
 
     /*
     Student *stu=[Studentnew];//retainCount=1
@@ -317,6 +396,20 @@ typedef NS_OPTIONS(NSUInteger, DeviceFace){
     NSLog(@"obj  %ld",[obj retainCount]);
 
     
+}
+
+//委托模式
+-(void)protocol
+{
+    //给代理者增加了接口，类之间通信，需要打破循环引用
+    
+    //将类的实现代码按照功能分成几个部分，生成分类，给系统类增加功能
+    
+    //分类中声明属性，需要用runtime的关联对象
+    
+    //@dynamic，的setter和getter方法需要到运行时再提供，编译时看不到
+    
+    //通过协议提供匿名对象，只关注与协议的接口，不关注内部，适配器模式？
 }
 
 -(void)error:(NSError**)error
@@ -334,7 +427,6 @@ typedef NS_OPTIONS(NSUInteger, DeviceFace){
 {
     NSLog(@"ok");
 }
-
 
 
 @end
