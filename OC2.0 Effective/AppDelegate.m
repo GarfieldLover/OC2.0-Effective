@@ -12,6 +12,7 @@
 #import "GCDObject.h"
 #import "DesignPatterns.h"
 
+
 @interface AppDelegate ()
 
 @end
@@ -22,6 +23,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+#if 0
+  
     NSString* s=Notification;
     
     ViewController* vc=[[ViewController alloc] initWithName:@"zhangke"];
@@ -38,8 +41,8 @@
     [vc CoreFoundation];
     
     [vc aftermemory];
-#if 0
-
+    
+    
     BlockViewController* blockVC=[[BlockViewController alloc] init];
     [blockVC viewDidLoad];
     [blockVC release];
@@ -47,9 +50,11 @@
     
     [[GCDObject alloc] init];
     
-#endif
-    
     DesignPatterns* design=[[DesignPatterns alloc] init];
+
+    
+#endif
+
  
     return YES;
 }
