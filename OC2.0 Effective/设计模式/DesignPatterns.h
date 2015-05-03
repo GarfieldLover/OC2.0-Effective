@@ -10,4 +10,6 @@
 
 @interface DesignPatterns : NSObject
 
+@property (nonatomic,strong) NSString* design;
+
 @end

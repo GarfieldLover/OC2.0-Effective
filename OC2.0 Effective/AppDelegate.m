@@ -10,7 +10,7 @@
 #import "ViewController.h"
 #import "BlockViewController.h"
 #import "GCDObject.h"
-
+#import "DesignPatterns.h"
 
 @interface AppDelegate ()
 
@@ -48,6 +48,8 @@
     [[GCDObject alloc] init];
     
 #endif
+    
+    DesignPatterns* design=[[DesignPatterns alloc] init];
  
     return YES;
 }
