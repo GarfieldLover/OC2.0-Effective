@@ -93,11 +93,16 @@ typedef int (^blk_t)(int);
     [blockObject loadImageWithBlock:^UIImageView* (UIImage* image,CGSize size){
         NSLog(@"传递进入，择时回调，delegate，需要copy block %@ , %f",image,size.width);
         UIImageView* imageView=[[UIImageView alloc] initWithImage:image];
+        [self.view addSubview:imageView];
         size=tempSize;
         [blockArray addObject:imageView];
         //block使用附有__strong的变量，当复制到堆上被block所持有，循环引用。self 默认__strong持有Block，block持有self，使得self得不到释放
         NSLog(@"self==%@",temp);
         tmp=nil;
+        
+        //block确认能返回东西，同步就是在等block返回才能执行block，所以mainQ在等block返回，
+        //就和2个人，一个先给我钱我再给你验货，一个是我必须先验货才能反给你钱，死锁
+        //就是因为block有return，返回了才能执行下边代码，
         return imageView;
     }];
     

@@ -10,6 +10,7 @@
 
 UIKIT_EXTERN NSString *const Notification;
 
+typedef void (^downImage)(UIImage* image);
 
 @interface ViewController : UIViewController<NSCopying>{
 @protected
@@ -40,6 +41,8 @@ UIKIT_EXTERN NSString *const Notification;
 -(void)aftermemory;
 
 -(void)CoreFoundation;
+
+-(void)down:(downImage)image;
 
 
 @end

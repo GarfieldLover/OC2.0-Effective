@@ -11,7 +11,7 @@
 #import "BlockViewController.h"
 #import "GCDObject.h"
 #import "DesignPatterns.h"
-
+#import <objc/runtime.h>
 
 @interface AppDelegate ()
 
@@ -22,8 +22,51 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    id ooo=nil;
+//    @autoreleasepool {
+        ooo=[NSObject alloc];
+        [ooo retain];
+        [ooo autorelease];
+        [ooo autorelease];
+
+//    }
+
     
-#if 0
+    //autorelease 不立马－1, pool drain才－1， 每个函数的pool都是由runloop开辟的
+    
+    
+    //返回值类型，声明函数名，参数别表，    ^ 返回值类型，参数列表
+    UIImage* (^downloadImage)(NSURL* url)=^ UIImage* (NSURL* url){
+        return [UIImage new];
+    };
+    UIImage* image=  downloadImage(nil);
+    
+    
+    
+    
+    NSData* (^loadData)(NSNumber* num) = ^ NSData* (NSNumber* num){
+        return [NSData new];
+    };
+    
+    NSData* data= loadData(@1);
+    
+    
+    ViewController* vcxx=[[ViewController alloc] initWithName:@"zhangke"];
+    //[vcxx url]
+    [vcxx down:^(UIImage* image){
+        NSLog(@"xx");
+    }];
+    
+    //有用来描述类和元类的作用
+    Class xx= objc_getMetaClass(class_getName(vcxx.class));
+    
+    unsigned int outCount=0;
+    Method *methods = class_copyMethodList(vcxx.class, &outCount);
+    Method method=methods[0];
+    SEL sel=  method_getName(method);
+    
+    
+//#if 0
   
     NSString* s=Notification;
     
@@ -53,7 +96,7 @@
     DesignPatterns* design=[[DesignPatterns alloc] init];
 
     
-#endif
+//#endif
 
  
     return YES;

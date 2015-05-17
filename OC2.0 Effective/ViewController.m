@@ -84,9 +84,11 @@ typedef NS_OPTIONS(NSUInteger, DeviceFace){
     [lock lock];
     id object=[[NSObject alloc] init];
     [lock unlock];
+    [object release];
+
     
     @synchronized(self){
-        object=[NSObject new];
+        object=[[NSObject new] autorelease];
     };
     
     //使用serial队列读取写入，并发队列也可以执行，使用栅栏barrier，
@@ -96,7 +98,9 @@ typedef NS_OPTIONS(NSUInteger, DeviceFace){
     [set enumerateObjectsUsingBlock:^(id obj, BOOL* stop){
         NSLog(@"%@",obj);
     }];
-    
+    [lock release];
+    [set release];
+
     //VC内部啥也不干3个计数，self，superclass？
     //会引用self，找判断条件把timer失效，释放self
     [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(runLoop:) userInfo:nil repeats:YES];
@@ -363,7 +367,7 @@ typedef NS_OPTIONS(NSUInteger, DeviceFace){
     CFArrayRef cfObject=NULL;
     
     id obj=[[NSMutableArray alloc] init];
-    [obj addObject:[NSObject new]];
+    [obj addObject:[[NSObject new] autorelease]];
     
     //__bridge来做objectc对象和corefoundtion结构体转化
 //    cfObject=(__bridge CFArrayRef)obj;
@@ -428,5 +432,9 @@ typedef NS_OPTIONS(NSUInteger, DeviceFace){
     NSLog(@"ok");
 }
 
+-(void)down:(downImage)image
+{
+    image(nil);
+}
 
 @end

@@ -11,5 +11,7 @@
 
 
 @interface BlockViewController : ViewController
-
+{
+    IBOutlet UIImageView* xx;
+}
 @end

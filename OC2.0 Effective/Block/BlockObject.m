@@ -20,7 +20,7 @@
     return self;
 }
 
--(void)loadImageWithBlock:(imageBlock)block
+-(void)loadImageWithBlock:(UIImageView* (^)(UIImage* image,CGSize size))block
 {
     [aBlock release];
     //对于block语法可以调用copy，除了block作为返回值，赋值给__strong修饰符的变量，含有usingblock或GCD外，
@@ -30,6 +30,13 @@
     //NSConcreteGlobalBlock, 创建在全局数据区域上，什么也不做，指向地址相同,计数为1
     //NSConcreteMallocBlock，创建在堆上，copy创建新对象当然是1，都是1
     aBlock=[[[block copy] retain] retain];
+    
+    UIImage* image=[UIImage imageNamed:@"照片.png"];
+//    dispatch_async(dispatch_get_main_queue(), ^{
+        UIImageView* xx= aBlock(image,image.size);
+        
+
+//    });
     
 }
 
