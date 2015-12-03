@@ -30,6 +30,11 @@
         [ooo autorelease];
 
 //    }
+    
+    NSString* aimianliang=@"111222";
+    NSString* newstring=[aimianliang retain];
+    //全局数据区域的，特么的没有retainCount
+    
 
     
     //autorelease 不立马－1, pool drain才－1， 每个函数的pool都是由runloop开辟的
